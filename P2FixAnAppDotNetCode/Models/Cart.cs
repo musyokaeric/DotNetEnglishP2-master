@@ -82,7 +82,9 @@ namespace P2FixAnAppDotNetCode.Models
         public Product FindProductInCartLines(int productId)
         {
             // TODO implement the method
-            return null;
+            //this line returns the producut from a list of lines
+            //whose product id matches the id being queried
+            return Lines.First(c => c.Product.Id == productId).Product;
         }
 
         /// <summary>
