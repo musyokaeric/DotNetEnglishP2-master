@@ -25,7 +25,10 @@ namespace P2FixAnAppDotNetCode.Models
         private List<CartLine> GetCartLineList()
         {
             //Checks if the lines property is null, and initializes if true
-            if (lines == null) lines = new List<CartLine>();
+            if (lines == null)
+            {
+                lines = new List<CartLine>();
+            }
             return lines;
         }
 
@@ -34,22 +37,25 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>//
         public void AddItem(Product product, int quantity)
         {
-            // TODO implement the method
             GetCartLineList();
             bool addedOrUpdated = false;
             if (lines.Count > 0) //checks if a item has been added to cart
             {
                 //goes through each cartline to check if the added product matches with those added to cart
-                foreach (var line in lines) 
+                foreach (var line in lines)
+                {
                     if (line.Product == product)
                     {
                         line.Quantity += quantity;
                         addedOrUpdated = true;
                         break;
                     }
+                }
             }
             if (!addedOrUpdated) //checks if the product hasn't been added or its quantity updated
+            {
                 lines.Add(new CartLine { Product = product, Quantity = quantity });
+            }
         }
 
         /// <summary>
@@ -63,7 +69,6 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>
         public double GetTotalValue()
         {
-            // TODO implement the method
             double total = 0;
             //go through each line in the cartlines
             foreach (var line in Lines)
@@ -78,7 +83,6 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>
         public double GetAverageValue()
         {
-            // TODO implement the method
             double priceSum = 0;
             double totalQuantity = 0;
             //go through each line in the cartlines
@@ -86,6 +90,11 @@ namespace P2FixAnAppDotNetCode.Models
             {
                 priceSum += (line.Product.Price * line.Quantity);
                 totalQuantity += line.Quantity;
+            }
+            //prevent dividebyzero exception
+            if (totalQuantity == 0)
+            {
+                return 0;
             }
             return priceSum / totalQuantity;
         }
@@ -95,7 +104,6 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>
         public Product FindProductInCartLines(int productId)
         {
-            // TODO implement the method
             //this line returns the producut from a list of lines
             //whose product id matches the id being queried
             return Lines.First(c => c.Product.Id == productId).Product;
