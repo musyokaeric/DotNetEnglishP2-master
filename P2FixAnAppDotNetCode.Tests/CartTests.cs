@@ -20,11 +20,7 @@ namespace P2FixAnAppDotNetCode.Tests
             Product product2 = new Product(1, 0, 20, "name", "description");
 
             cart.AddItem(product1, 1);
-            //cart.AddItem(product2, 1);
-            //commenting out this line will bring the matching elements to one instead of two
-
-            cart.AddItem(product1, 1);
-            //this line of code tests if adding one extra product would update its quantity
+            cart.AddItem(product2, 1);
 
             Assert.NotEmpty(cart.Lines);
             Assert.Single(cart.Lines);

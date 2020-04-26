@@ -17,7 +17,7 @@ namespace P2FixAnAppDotNetCode.Models
         //Create a private lines property whose output will be pulled by public
         /// Lines property
         /// </summary>
-        private List<CartLine> lines { get; set; }
+        private List<CartLine> _lines { get; set; }
         /// <summary>
         /// Return the actual cartline list
         /// </summary>
@@ -25,11 +25,11 @@ namespace P2FixAnAppDotNetCode.Models
         private List<CartLine> GetCartLineList()
         {
             //Checks if the lines property is null, and initializes if true
-            if (lines == null)
+            if (_lines == null)
             {
-                lines = new List<CartLine>();
+                _lines = new List<CartLine>();
             }
-            return lines;
+            return _lines;
         }
 
         /// <summary>
@@ -39,12 +39,12 @@ namespace P2FixAnAppDotNetCode.Models
         {
             GetCartLineList();
             bool addedOrUpdated = false;
-            if (lines.Count > 0) //checks if a item has been added to cart
+            if (_lines.Count > 0) //checks if a item has been added to cart
             {
                 //goes through each cartline to check if the added product matches with those added to cart
-                foreach (var line in lines)
+                foreach (var line in _lines)
                 {
-                    if (line.Product == product)
+                    if (line.Product.Id == product.Id)
                     {
                         line.Quantity += quantity;
                         addedOrUpdated = true;
@@ -54,7 +54,7 @@ namespace P2FixAnAppDotNetCode.Models
             }
             if (!addedOrUpdated) //checks if the product hasn't been added or its quantity updated
             {
-                lines.Add(new CartLine { Product = product, Quantity = quantity });
+                _lines.Add(new CartLine { Product = product, Quantity = quantity });
             }
         }
 
